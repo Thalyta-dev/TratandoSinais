@@ -2,30 +2,27 @@ import os
 import signal
 import time
 
-pid=0
-print("Digite o pid: ")
+pid=input("Digite o pid: ")
 
-#Vamos aguardar o usuario digitar, o pib so outro programa
-pid=input()
+
+#Vou usar essa função pra mandar os inais para o receive
+def mandandoSinais(sinal):
+    
+    #Aqui vou colocar um delay para podermos ver a magica acontecer
+    time.sleep(3)    
+        
+    #Aqui estou realmente mandando os sinais, a biblioteca os me permite mandar sinais para outro programa
+    os.kill(int(pid),sinal)
+
+
 
 print("Mandando o signal")  
 
-#Vamos mandar os sinais para o outro programa, só que primeiro aguardaremos 3 segundos para que possamos ver a "magica" acontecer
-time.sleep(3)
-print("Mandando o signal SiGINT")
+print("Mandando o signal SIGINT")
+mandandoSinais(signal.SIGINT)
 
-#Aqui vai ser a mesmo coisa de escrevermos no terminal
-os.kill(int(pid),signal.SIGINT)
-
-time.sleep(3)
-    
 print("Mandando o signal SIGTERM")
-#Aqui vai ser a mesmo coisa de escrevermos no terminal
-os.kill(int(pid), signal.SIGTERM)
-
-
-time.sleep(3)
+mandandoSinais(signal.SIGTERM)
 
 print("Mandando o signal SIGKILL")
-#Aqui vai ser a mesmo coisa de escrevermos no terminal
-os.kill(int(pid), signal.SIGKILL)
+mandandoSinais(signal.SIGKILL)
